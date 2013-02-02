@@ -19,7 +19,7 @@ Vertex *new_vertex(double x, double y)
     result->pt[0] = x;
     result->pt[1] = y;
     result->pt[2] = 0;
-    fprintf(stderr, "New Vertex: %g %g %g", result->pt[0], result->pt[1], result->pt[2]);
+
     if (latest_v == NULL) {
         result->index = 0;
     } else {
@@ -176,7 +176,6 @@ void tessellate
     n_tris = 0;
     tess = gluNewTess();
 
-    fprintf(stderr, "Set callbacks\n");
 
     gluTessCallback(tess, GLU_TESS_VERTEX,  (GLvoid (*) ()) &vertex);
     gluTessCallback(tess, GLU_TESS_BEGIN,   (GLvoid (*) ()) &begin);
@@ -184,29 +183,23 @@ void tessellate
     gluTessCallback(tess, GLU_TESS_COMBINE, (GLvoid (*) ()) &combine);
 
     gluTessBeginPolygon(tess, 0);
-    fprintf(stderr, "Start polygon\n");
     do {
         contourbegin = *contoursbegin++;
         if (contoursbegin == contoursend) {
-            fprintf(stderr, "Contoursbegin equals contoursend, done.\n");
             break;
         }
         contourend = *contoursbegin;
         gluTessBeginContour(tess);
-        fprintf(stderr, "Start contour\n");
         while (contourbegin != contourend) {
             current_vertex = new_vertex(contourbegin[0], contourbegin[1]);
             contourbegin += 2;
             gluTessVertex(tess, current_vertex->pt, current_vertex);
         }
         gluTessEndContour(tess);
-        fprintf(stderr, "End contour\n");
     } while (1);
-    fprintf(stderr, "End polygon\n");
     gluTessEndPolygon(tess);
 
     write_output(verts, tris, nverts, ntris);
 
     gluDeleteTess(tess);
-    fprintf(stderr, "End tessellate\n");
 }
