@@ -19,8 +19,6 @@ var tessellate = function(loops)
         boundaries.push(vertices.length);
     }
 
-    console.log(vertices, boundaries);
-
     var p = Module._malloc(vertices.length * 8);
 
     for (i=0; i<vertices.length; ++i)
