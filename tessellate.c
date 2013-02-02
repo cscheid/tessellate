@@ -24,6 +24,7 @@ typedef struct TessContext {
     Vertex *v_prevprev;
     Vertex *latest_v;
     GLenum current_mode;
+    int odd_even_strip;
 
     void (*vertex_cb)(Vertex *, struct TessContext *);
 } TessContext;
@@ -43,6 +44,7 @@ TessContext *new_tess_context()
     result->v_prev = NULL;
     result->v_prev = NULL;
     result->vertex_cb = &skip_vertex;
+    result->odd_even_strip = 0;
     return result;
 }
 
@@ -97,17 +99,22 @@ void fan_vertex(Vertex *v, TessContext *ctx) {
 }
 
 void strip_vertex(Vertex *v, TessContext *ctx)
-{ 
-    if (ctx->v_prevprev == NULL) {
-        ctx->v_prevprev = v;
-        return;
-    }
+{
     if (ctx->v_prev == NULL) {
         ctx->v_prev = v;
         return;
     }
-    new_triangle(ctx, ctx->v_prevprev->index, ctx->v_prev->index, v->index);
- 
+    if (ctx->v_prevprev == NULL) {
+        ctx->v_prevprev = v;
+        return;
+    }
+    if (ctx->odd_even_strip) {
+        new_triangle(ctx, ctx->v_prevprev->index, ctx->v_prev->index, v->index);
+    } else {
+        new_triangle(ctx, ctx->v_prev->index, ctx->v_prevprev->index, v->index);
+    }
+    ctx->odd_even_strip = !ctx->odd_even_strip;
+
     ctx->v_prev = ctx->v_prevprev;
     ctx->v_prevprev = v;
 }
@@ -136,6 +143,7 @@ void begin(GLenum which, void *poly_data)
 {
     TessContext *ctx = (TessContext *)poly_data;
     ctx->v_prev = ctx->v_prevprev = NULL;
+    ctx->odd_even_strip = 0;
     switch (which) {
     case GL_TRIANGLES: ctx->vertex_cb = &triangle_vertex; break;
     case GL_TRIANGLE_STRIP: ctx->vertex_cb = &strip_vertex; break;
