@@ -24,5 +24,11 @@
 // console.log(Module.getValue(nverts, 'i32'));
 // console.log(Module.getValue(ntris, 'i32'));
 
-console.log(tessellate([0,0,1,5,2,0,-1,3,3,3]));
+console.log(tessellate([[0,0,1,5,2,0,-1,3,3,3]]));
 
+console.log(tessellate([[0,0,3,0,3,3,0,3],[1,1,1,2,2,2,2,1]]));
+
+console.log(tessellate([[0,0,3,0,3,3,0,3],[1,1,2,1,2,2,1,2]]));
+
+console.log(tessellate([[-2,3,-2,0,2,0,2,3],
+                        [-1,2,-1,1,1,1,1,2]]));

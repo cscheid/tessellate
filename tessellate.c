@@ -206,9 +206,6 @@ void tessellate
     gluTessBeginPolygon(tess, ctx);
     do {
         contourbegin = *contoursbegin++;
-        if (contoursbegin == contoursend) {
-            break;
-        }
         contourend = *contoursbegin;
         gluTessBeginContour(tess);
         while (contourbegin != contourend) {
@@ -217,7 +214,7 @@ void tessellate
             gluTessVertex(tess, current_vertex->pt, current_vertex);
         }
         gluTessEndContour(tess);
-    } while (1);
+    } while (contoursbegin != (contoursend - 1));
     gluTessEndPolygon(tess);
 
     write_output(ctx, verts, tris, nverts, ntris);
