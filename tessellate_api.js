@@ -1,6 +1,6 @@
 var tessellate = {};
 
-tessellate.tesselate = (function() {
+tessellate.tessellate = (function() {
 
 var c_tessellate = Module.cwrap('tessellate', 'void', ['number', 'number', 'number', 
                                                        'number', 'number', 'number']);
