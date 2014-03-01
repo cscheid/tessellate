@@ -1,4 +1,4 @@
 !function() {
-    var Module = {lala: 'la'};
+    var Module = {};
 
 var emscriptenate = function(Module) {

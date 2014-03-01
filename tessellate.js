@@ -1,5 +1,5 @@
 !function() {
-    var Module = {lala: 'la'};
+    var Module = {};
 
 var emscriptenate = function(Module) {
 // Note: For maximum-speed code, see "Optimizing Code" on the Emscripten wiki, https://github.com/kripken/emscripten/wiki/Optimizing-Code
