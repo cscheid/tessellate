@@ -5,4 +5,4 @@
     } else {
         this.tessellate = tessellate;
     }
-}();
+}).apply(this);

@@ -1,4 +1,4 @@
-!function() {
+!(function() {
     var Module = {};
 
 var emscriptenate = function(Module) {
@@ -6136,4 +6136,4 @@ return tessellate;
     } else {
         this.tessellate = tessellate;
     }
-}();
+}).apply(this);
