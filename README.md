@@ -11,8 +11,11 @@ potentially self-intersecting, with holes, or with duplicate
 vertices. Simple examples of calling the tessellate function directly
 are located in main.c.
 
+# tessellate.js
+
 More interestingly, this repository also includes an
 Emscripten-compiled module, _tessellate.js, and a Javascript-friendly
-wrapper, in tessellate.js. Simple examples are available under
-index.html.
+wrapper, in `tessellate.js`. Simple examples are available under
+index.html. `tessellate.js` is AMD-friendly, and won't pollute your
+global namespace if it thinks it sees RequireJS.
 
